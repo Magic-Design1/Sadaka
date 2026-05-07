@@ -35,15 +35,12 @@
     content: '';
     position: fixed;
     inset: 0;
-    background: 
+    background:
       radial-gradient(ellipse at 20% 20%, rgba(201,168,76,0.08) 0%, transparent 50%),
       radial-gradient(ellipse at 80% 80%, rgba(46,204,113,0.05) 0%, transparent 50%),
       repeating-linear-gradient(
-        45deg,
-        transparent,
-        transparent 40px,
-        rgba(201,168,76,0.015) 40px,
-        rgba(201,168,76,0.015) 41px
+        45deg, transparent, transparent 40px,
+        rgba(201,168,76,0.015) 40px, rgba(201,168,76,0.015) 41px
       );
     pointer-events: none;
     z-index: 0;
@@ -57,28 +54,20 @@
     padding: 24px 20px;
   }
 
+  /* ── Header ── */
   header {
     text-align: center;
     margin-bottom: 40px;
     padding: 40px 20px;
-    position: relative;
   }
-
   header::after {
     content: '';
     display: block;
-    width: 120px;
-    height: 2px;
+    width: 120px; height: 2px;
     background: linear-gradient(90deg, transparent, var(--gold), transparent);
     margin: 20px auto 0;
   }
-
-  .header-icon {
-    font-size: 3rem;
-    margin-bottom: 12px;
-    filter: drop-shadow(0 0 20px rgba(201,168,76,0.5));
-  }
-
+  .header-icon { font-size: 3rem; margin-bottom: 12px; filter: drop-shadow(0 0 20px rgba(201,168,76,0.5)); }
   header h1 {
     font-family: 'Amiri', serif;
     font-size: clamp(1.8rem, 4vw, 3rem);
@@ -88,21 +77,15 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
     letter-spacing: 2px;
-    text-shadow: none;
   }
+  header p { color: var(--text-dim); font-size: 0.95rem; margin-top: 8px; }
 
-  header p {
-    color: var(--text-dim);
-    font-size: 0.95rem;
-    margin-top: 8px;
-  }
-
+  /* ── Grand Total Banner ── */
   .grand-total-banner {
     background: linear-gradient(135deg, #1a2a0a, #0d1f05);
     border: 1px solid rgba(46,204,113,0.4);
     border-radius: 20px;
     padding: 32px 40px;
-    margin-bottom: 40px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -111,70 +94,150 @@
     overflow: hidden;
     box-shadow: 0 0 60px rgba(46,204,113,0.1), inset 0 0 40px rgba(46,204,113,0.03);
   }
-
   .grand-total-banner::before {
     content: '';
     position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
     background: radial-gradient(circle at center, rgba(46,204,113,0.05) 0%, transparent 60%);
     animation: pulse-bg 4s ease-in-out infinite;
   }
-
   @keyframes pulse-bg {
-    0%, 100% { transform: scale(1); opacity: 1; }
+    0%,100% { transform: scale(1); opacity: 1; }
     50% { transform: scale(1.1); opacity: 0.7; }
   }
-
-  .grand-total-label { position: relative; }
-
-  .grand-total-label .icon {
-    font-size: 2.5rem;
-    margin-bottom: 4px;
-  }
-
-  .grand-total-label h2 {
-    font-size: 1.1rem;
-    color: var(--green);
-    font-weight: 600;
-    letter-spacing: 1px;
-  }
-
-  .grand-total-label p {
-    color: var(--text-dim);
-    font-size: 0.8rem;
-    margin-top: 2px;
-  }
-
-  .grand-total-amount {
-    position: relative;
-    text-align: center;
-  }
-
+  .grand-total-label .icon { font-size: 2.5rem; margin-bottom: 4px; }
+  .grand-total-label h2 { font-size: 1.1rem; color: var(--green); font-weight: 600; letter-spacing: 1px; }
+  .grand-total-label p { color: var(--text-dim); font-size: 0.8rem; margin-top: 2px; }
+  .grand-total-amount { position: relative; text-align: center; }
   .grand-total-amount .amount {
     font-size: clamp(2.5rem, 5vw, 4.5rem);
     font-weight: 900;
     color: var(--green-glow);
     text-shadow: 0 0 30px rgba(26,255,136,0.5), 0 0 60px rgba(26,255,136,0.2);
     line-height: 1;
-    font-variant-numeric: tabular-nums;
+  }
+  .grand-total-amount .currency { font-size: 1.2rem; color: var(--green); margin-top: 4px; }
+
+  /* ══════════════════════════════════════
+     Connected Sub-Cards Tree
+  ══════════════════════════════════════ */
+  .tree-section {
+    margin-bottom: 40px;
   }
 
-  .grand-total-amount .currency {
-    font-size: 1.2rem;
+  /* الخط العمودي النازل من البانر */
+  .tree-trunk {
+    width: 2px;
+    height: 36px;
+    background: linear-gradient(180deg, rgba(46,204,113,0.8), rgba(46,204,113,0.4));
+    margin: 0 auto;
+  }
+
+  /* الخط الأفقي الذي يربط كل الكروت */
+  .tree-branch-row {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0;
+  }
+
+  /* الخط الأفقي يُرسم كـ pseudo-element على الـ wrapper */
+  .tree-branch-line {
+    position: absolute;
+    top: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(46,204,113,0.5) 10%, rgba(46,204,113,0.5) 90%, transparent);
+    /* العرض والموقع يُحسبان بـ JS */
+  }
+
+  /* كل كارت وعموده النازل */
+  .tree-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1 1 140px;
+    max-width: 220px;
+    min-width: 130px;
+    padding: 0 8px;
+    margin-bottom: 12px;
+  }
+
+  .tree-node-stem {
+    width: 2px;
+    height: 24px;
+    background: linear-gradient(180deg, rgba(46,204,113,0.5), rgba(46,204,113,0.3));
+  }
+
+  /* الكارت الفرعي */
+  .sub-card {
+    width: 100%;
+    background: linear-gradient(145deg, #0d1f10, #0f1a0d);
+    border: 1px solid rgba(46,204,113,0.35);
+    border-radius: 16px;
+    padding: 18px 16px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(46,204,113,0.08);
+  }
+  .sub-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--green), transparent);
+  }
+  .sub-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(46,204,113,0.2);
+    border-color: rgba(46,204,113,0.6);
+  }
+  .sub-card .sc-title {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    font-weight: 600;
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+    line-height: 1.4;
+  }
+  .sub-card .sc-amount {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--green-glow);
+    text-shadow: 0 0 16px rgba(26,255,136,0.4);
+    line-height: 1;
+  }
+  .sub-card .sc-currency {
+    font-size: 0.68rem;
     color: var(--green);
     margin-top: 4px;
+    opacity: 0.8;
+  }
+  .sub-card .sc-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 8px var(--green);
+    margin: 10px auto 0;
+    animation: pulse-dot 2s ease-in-out infinite;
   }
 
+  @keyframes pulse-dot {
+    0%,100% { box-shadow: 0 0 6px var(--green); }
+    50%      { box-shadow: 0 0 14px rgba(46,204,113,0.9); }
+  }
+
+  /* ── Monthly Summary ── */
   .monthly-summary {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 12px;
     margin-bottom: 40px;
   }
-
   .month-card {
     background: var(--dark3);
     border: 1px solid var(--border);
@@ -185,46 +248,21 @@
     position: relative;
     overflow: hidden;
   }
-
   .month-card::before {
     content: '';
     position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    bottom: 0; left: 0; right: 0;
     height: 2px;
     background: linear-gradient(90deg, transparent, var(--gold), transparent);
     opacity: 0;
     transition: opacity 0.3s;
   }
-
-  .month-card:hover {
-    border-color: var(--gold);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-  }
-
+  .month-card:hover { border-color: var(--gold); transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
   .month-card:hover::before { opacity: 1; }
+  .month-card .month-name { font-size: 0.75rem; color: var(--text-dim); margin-bottom: 6px; font-weight: 600; }
+  .month-card .month-amount { font-size: 1.1rem; font-weight: 700; color: var(--gold-light); }
 
-  .month-card .month-name {
-    font-size: 0.75rem;
-    color: var(--text-dim);
-    margin-bottom: 6px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-  }
-
-  .month-card .month-amount {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--gold-light);
-  }
-
-  .month-card .month-amount.loading {
-    color: var(--text-dim);
-    font-size: 0.8rem;
-  }
-
+  /* ── Section Title ── */
   .section-title {
     font-family: 'Amiri', serif;
     font-size: 1.4rem;
@@ -234,23 +272,21 @@
     align-items: center;
     gap: 10px;
   }
-
   .section-title::before {
     content: '';
     display: inline-block;
-    width: 4px;
-    height: 24px;
+    width: 4px; height: 24px;
     background: linear-gradient(180deg, var(--gold), var(--gold-dim));
     border-radius: 2px;
   }
 
+  /* ── Members Grid ── */
   .members-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 16px;
     margin-bottom: 40px;
   }
-
   .member-card {
     background: var(--card-bg);
     border-radius: 16px;
@@ -259,9 +295,7 @@
     position: relative;
     overflow: hidden;
     transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-    cursor: default;
   }
-
   .member-card::before {
     content: '';
     position: absolute;
@@ -270,291 +304,152 @@
     background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent);
     transition: all 0.4s;
   }
-
   .member-card.paid {
     border-color: rgba(46,204,113,0.4);
     background: linear-gradient(145deg, #0d1f10, #0f1a0d);
     box-shadow: 0 0 20px rgba(46,204,113,0.08);
   }
-
-  .member-card.paid::before {
-    background: linear-gradient(90deg, transparent, var(--green), transparent);
-  }
-
-  .member-card:hover {
-    transform: translateY(-5px) scale(1.01);
-    box-shadow: 0 16px 40px rgba(0,0,0,0.4);
-    z-index: 2;
-  }
-
-  .member-card.paid:hover {
-    box-shadow: 0 16px 40px rgba(46,204,113,0.15);
-  }
+  .member-card.paid::before { background: linear-gradient(90deg, transparent, var(--green), transparent); }
+  .member-card:hover { transform: translateY(-5px) scale(1.01); box-shadow: 0 16px 40px rgba(0,0,0,0.4); z-index: 2; }
+  .member-card.paid:hover { box-shadow: 0 16px 40px rgba(46,204,113,0.15); }
 
   .rank-badge {
     position: absolute;
-    top: 14px;
-    left: 14px;
-    width: 28px;
-    height: 28px;
+    top: 14px; left: 14px;
+    width: 28px; height: 28px;
     background: rgba(201,168,76,0.1);
     border: 1px solid var(--border);
     border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.7rem;
-    color: var(--gold-dim);
-    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.7rem; color: var(--gold-dim); font-weight: 700;
   }
-
-  .member-card.paid .rank-badge {
-    background: rgba(46,204,113,0.1);
-    border-color: rgba(46,204,113,0.3);
-    color: var(--green);
-  }
+  .member-card.paid .rank-badge { background: rgba(46,204,113,0.1); border-color: rgba(46,204,113,0.3); color: var(--green); }
 
   .status-dot {
     position: absolute;
-    top: 14px;
-    right: 14px;
-    width: 10px;
-    height: 10px;
+    top: 14px; right: 14px;
+    width: 10px; height: 10px;
     border-radius: 50%;
-    background: #374151;
-    border: 2px solid #4B5563;
+    background: #374151; border: 2px solid #4B5563;
   }
-
   .member-card.paid .status-dot {
-    background: var(--green);
-    border-color: var(--green-glow);
+    background: var(--green); border-color: var(--green-glow);
     box-shadow: 0 0 8px var(--green), 0 0 16px rgba(46,204,113,0.4);
     animation: pulse-dot 2s ease-in-out infinite;
   }
 
-  @keyframes pulse-dot {
-    0%, 100% { box-shadow: 0 0 8px var(--green), 0 0 16px rgba(46,204,113,0.4); }
-    50% { box-shadow: 0 0 12px var(--green), 0 0 24px rgba(46,204,113,0.6); }
-  }
-
   .member-avatar {
-    width: 50px;
-    height: 50px;
+    width: 50px; height: 50px;
     border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.3rem;
-    font-weight: 900;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem; font-weight: 900;
     margin: 8px auto 14px;
     background: linear-gradient(135deg, #1a2035, #0d1628);
     border: 2px solid var(--border);
-    color: var(--gold);
-    text-transform: uppercase;
+    color: var(--gold); text-transform: uppercase;
   }
-
-  .member-card.paid .member-avatar {
-    background: linear-gradient(135deg, #0d2015, #071a0f);
-    border-color: rgba(46,204,113,0.3);
-    color: var(--green);
-  }
+  .member-card.paid .member-avatar { background: linear-gradient(135deg, #0d2015, #071a0f); border-color: rgba(46,204,113,0.3); color: var(--green); }
 
   .member-name {
     text-align: center;
-    font-size: 1rem;
-    font-weight: 700;
+    font-size: 1rem; font-weight: 700;
     color: var(--text);
     margin-bottom: 6px;
     line-height: 1.3;
     min-height: 2.6em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; align-items: center; justify-content: center;
   }
-
   .member-card.paid .member-name { color: #d4fde6; }
 
-  .member-amount {
-    text-align: center;
-    margin: 12px 0 14px;
-  }
-
-  .member-amount .amount-val {
-    font-size: 1.8rem;
-    font-weight: 900;
-    color: var(--text-dim);
-    transition: all 0.5s;
-  }
-
-  .member-card.paid .member-amount .amount-val {
-    color: var(--green-glow);
-    text-shadow: 0 0 20px rgba(46,204,113,0.4);
-  }
-
-  .member-amount .amount-label {
-    font-size: 0.7rem;
-    color: var(--text-dim);
-    letter-spacing: 1px;
-  }
-
-  .months-pills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-    justify-content: center;
-  }
-
+  .months-pills { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; }
   .month-pill {
-    font-size: 0.6rem;
-    padding: 3px 7px;
-    border-radius: 20px;
+    font-size: 0.6rem; padding: 3px 7px; border-radius: 20px;
     background: rgba(255,255,255,0.04);
     border: 1px solid rgba(255,255,255,0.06);
-    color: var(--text-dim);
-    font-weight: 600;
-    letter-spacing: 0.3px;
+    color: var(--text-dim); font-weight: 600;
   }
-
-  .month-pill.paid-month {
-    background: rgba(46,204,113,0.12);
-    border-color: rgba(46,204,113,0.3);
-    color: var(--green);
-  }
+  .month-pill.paid-month { background: rgba(46,204,113,0.12); border-color: rgba(46,204,113,0.3); color: var(--green); }
 
   .status-tag {
     text-align: center;
-    margin-top: 12px;
-    padding: 6px;
+    margin-top: 12px; padding: 6px;
     border-radius: 8px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 1px;
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 1px;
     background: rgba(255,255,255,0.03);
     color: var(--text-dim);
     border: 1px solid rgba(255,255,255,0.05);
   }
+  .member-card.paid .status-tag { background: rgba(46,204,113,0.08); color: var(--green); border-color: rgba(46,204,113,0.2); }
 
-  .member-card.paid .status-tag {
-    background: rgba(46,204,113,0.08);
-    color: var(--green);
-    border-color: rgba(46,204,113,0.2);
-  }
-
-  .loading-state {
-    text-align: center;
-    padding: 60px 20px;
-    color: var(--text-dim);
-  }
-
+  /* ── Loading / Error ── */
+  .loading-state { text-align: center; padding: 60px 20px; color: var(--text-dim); }
   .spinner {
-    width: 50px;
-    height: 50px;
-    border: 3px solid var(--border);
-    border-top-color: var(--gold);
+    width: 50px; height: 50px;
+    border: 3px solid var(--border); border-top-color: var(--gold);
     border-radius: 50%;
     animation: spin 1s linear infinite;
     margin: 0 auto 20px;
   }
-
   @keyframes spin { to { transform: rotate(360deg); } }
+  .error-state { text-align: center; padding: 40px 20px; background: rgba(220,38,38,0.05); border: 1px solid rgba(220,38,38,0.2); border-radius: 16px; color: #FCA5A5; }
 
-  .error-state {
-    text-align: center;
-    padding: 40px 20px;
-    background: rgba(220,38,38,0.05);
-    border: 1px solid rgba(220,38,38,0.2);
-    border-radius: 16px;
-    color: #FCA5A5;
-  }
+  /* ── Stats Bar ── */
+  .stats-bar { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-bottom: 32px; }
+  .stat-item { text-align: center; background: var(--dark3); border: 1px solid var(--border); border-radius: 12px; padding: 16px 24px; min-width: 120px; }
+  .stat-item .val { font-size: 1.8rem; font-weight: 900; color: var(--gold-light); }
+  .stat-item .lbl { font-size: 0.75rem; color: var(--text-dim); margin-top: 2px; }
 
-  footer {
-    text-align: center;
-    padding: 30px;
-    color: var(--text-dim);
-    font-size: 0.8rem;
-    border-top: 1px solid var(--border);
-    margin-top: 20px;
-  }
-
+  /* ── Refresh ── */
   .refresh-btn {
     background: linear-gradient(135deg, var(--gold-dim), var(--gold));
-    color: #000;
-    border: none;
-    padding: 10px 24px;
-    border-radius: 25px;
+    color: #000; border: none;
+    padding: 10px 24px; border-radius: 25px;
     font-family: 'Cairo', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.3s;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
+    font-size: 0.9rem; font-weight: 700;
+    cursor: pointer; transition: all 0.3s;
+    display: inline-flex; align-items: center; gap: 8px;
     margin-top: 16px;
   }
+  .refresh-btn:hover { transform: scale(1.05); box-shadow: 0 8px 20px rgba(201,168,76,0.3); }
+  .last-updated { font-size: 0.75rem; color: var(--text-dim); margin-top: 10px; }
 
-  .refresh-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 20px rgba(201,168,76,0.3);
-  }
-
-  .last-updated {
-    font-size: 0.75rem;
-    color: var(--text-dim);
-    margin-top: 10px;
-  }
-
-  .stats-bar {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-bottom: 32px;
-  }
-
-  .stat-item {
-    text-align: center;
-    background: var(--dark3);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 16px 24px;
-    min-width: 120px;
-  }
-
-  .stat-item .val {
-    font-size: 1.8rem;
-    font-weight: 900;
-    color: var(--gold-light);
-  }
-
-  .stat-item .lbl {
-    font-size: 0.75rem;
-    color: var(--text-dim);
-    margin-top: 2px;
-  }
+  footer { text-align: center; padding: 30px; color: var(--text-dim); font-size: 0.8rem; border-top: 1px solid var(--border); margin-top: 20px; }
 
   @media (max-width: 600px) {
     .grand-total-banner { flex-direction: column; text-align: center; padding: 24px; }
     .members-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+    .tree-node { min-width: 110px; flex: 1 1 110px; }
+    /* إخفاء الخط الأفقي لما الكروت تتلف على أكثر من صف */
+    .tree-branch-line { display: none !important; }
+    /* تقليل الجذع العمودي على الموبايل */
+    .tree-trunk { height: 20px; }
+  }
+
+  @media (max-width: 400px) {
+    .tree-node { flex: 1 1 100%; max-width: 100%; }
   }
 </style>
 </head>
 <body>
 
 <div class="container">
+
+  <!-- Header -->
   <header>
     <div class="header-icon">🕌</div>
     <h1>
-     ما من عبدٍ يتصدق بعدل تمرةٍ من كسبٍ طيبٍ، ولا يقبل الله إلا الطيب، إلا تقبَّلها الله بيمينه، فيُربيها لصاحبها كما يُربي أحدكم فلوه -أو فصيله- حتى تكون مثل الجبل
+ما من عبدٍ يتصدق بعدل تمرةٍ من كسبٍ طيبٍ، ولا يقبل الله إلا الطيب، إلا تقبَّلها الله بيمينه، فيُربيها لصاحبها كما يُربي أحدكم فلوه -أو فصيله- حتى تكون مثل الجبل
+      
     </h1>
     <p></p>
   </header>
 
+  <!-- Grand Total Banner -->
   <div class="grand-total-banner" id="grandTotalBanner">
     <div class="grand-total-label">
       <div class="icon">💰</div>
-      <h2>إجمالي الصدقات المجموعة</h2>
-      <p>من مايو حتى ديسمبر</p>
+      <h2>المتبقي من إجمالي الصدقات </h2>
+      <p> </p>
     </div>
     <div class="grand-total-amount">
       <div class="amount" id="grandTotal">---</div>
@@ -562,52 +457,49 @@
     </div>
   </div>
 
-  <div class="stats-bar" id="statsBar" style="display:none">
-    <div class="stat-item">
-      <div class="val" id="paidCount">0</div>
-      <div class="lbl">✅ دفع</div>
-    </div>
-    <div class="stat-item">
-      <div class="val" id="unpaidCount">0</div>
-      <div class="lbl">⏳ لم يدفع</div>
-    </div>
-    <div class="stat-item">
-      <div class="val" id="totalMembers">0</div>
-      <div class="lbl">👥 إجمالي الأعضاء</div>
+  <!-- Tree: الخط النازل من البانر + الكروت المتصلة -->
+  <div class="tree-section" id="treeSection" style="display:none">
+    <!-- الخط العمودي من البانر -->
+    <div class="tree-trunk"></div>
+    <!-- الصف الأفقي مع الكروت -->
+    <div class="tree-branch-row" id="treeBranchRow">
+      <div class="tree-branch-line" id="treeBranchLine"></div>
+      <!-- الكروت تُضاف هنا بـ JS -->
     </div>
   </div>
 
+  <!-- Stats Bar -->
+  <div class="stats-bar" id="statsBar" style="display:none">
+    <div class="stat-item"><div class="val" id="paidCount">0</div><div class="lbl">✅ دفع</div></div>
+    <div class="stat-item"><div class="val" id="unpaidCount">0</div><div class="lbl">⏳ لم يدفع</div></div>
+    <div class="stat-item"><div class="val" id="totalMembers">0</div><div class="lbl">👥 إجمالي الأعضاء</div></div>
+  </div>
+
+  <!-- Monthly Summary -->
   <h3 class="section-title">ملخص الشهور</h3>
   <div class="monthly-summary" id="monthlySummary"></div>
 
+  <!-- Members -->
   <h3 class="section-title">المشتركون</h3>
   <div id="mainContent">
-    <div class="loading-state">
-      <div class="spinner"></div>
-      <p>جاري تحميل البيانات...</p>
-    </div>
+    <div class="loading-state"><div class="spinner"></div><p>جاري تحميل البيانات...</p></div>
   </div>
 
   <div style="text-align:center; margin-top: 30px;">
-    <button class="refresh-btn" onclick="loadData()">
-      <span>🔄</span> تحديث البيانات
-    </button>
+    <button class="refresh-btn" onclick="loadData()"><span>🔄</span> تحديث البيانات</button>
     <div class="last-updated" id="lastUpdated"></div>
   </div>
 </div>
 
-<footer>
-  داشبورد الصدقات — بيانات مباشرة من Google Sheets
-</footer>
+<footer>داشبورد الصدقات — بيانات مباشرة من Google Sheets</footer>
 
 <script>
 const SHEET_ID = '1-JuJPGpQPK_3P9dMj7x2B4JyssT7Gg-z9-Sldco1ORM';
-const MONTHS = ['مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+const MONTHS   = ['مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
 
 function getInitials(name) {
-  const parts = name.trim().split(' ');
-  if (parts.length >= 2) return parts[0][0] + parts[1][0];
-  return parts[0].slice(0, 2);
+  const p = name.trim().split(' ');
+  return p.length >= 2 ? p[0][0] + p[1][0] : p[0].slice(0, 2);
 }
 
 function formatNumber(n) {
@@ -615,118 +507,156 @@ function formatNumber(n) {
   return Number(n).toLocaleString('ar-EG');
 }
 
-function parseGvizResponse(text) {
-  const match = text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/);
-  if (!match) throw new Error('Invalid gviz response');
-  return JSON.parse(match[1]);
-}
+/* رسم الخط الأفقي بعد ما الكروت تتحمل في الـ DOM */
+function drawBranchLine() {
+  const row   = document.getElementById('treeBranchRow');
+  const line  = document.getElementById('treeBranchLine');
+  const nodes = row.querySelectorAll('.tree-node');
+  if (nodes.length < 2) {
+    line.style.display = 'none';
+    return;
+  }
 
-async function fetchRange(range) {
-  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&range=${range}&headers=0`;
-  const res = await fetch(url);
-  const text = await res.text();
-  return parseGvizResponse(text);
+  const rowRect   = row.getBoundingClientRect();
+  const firstRect = nodes[0].getBoundingClientRect();
+  const lastRect  = nodes[nodes.length - 1].getBoundingClientRect();
+
+  // إذا الكروت اتلفّت على أكثر من صف، أخفِ الخط
+  if (Math.abs(firstRect.top - lastRect.top) > 10) {
+    line.style.display = 'none';
+    return;
+  }
+
+  const left  = firstRect.left  - rowRect.left  + firstRect.width  / 2;
+  const right = rowRect.right   - lastRect.right + lastRect.width  / 2;
+
+  line.style.display = 'block';
+  line.style.left    = left  + 'px';
+  line.style.right   = right + 'px';
 }
 
 async function loadData() {
-  document.getElementById('mainContent').innerHTML = `
-    <div class="loading-state">
-      <div class="spinner"></div>
-      <p>جاري تحميل البيانات...</p>
-    </div>`;
+  document.getElementById('mainContent').innerHTML =
+    `<div class="loading-state"><div class="spinner"></div><p>جاري تحميل البيانات...</p></div>`;
   document.getElementById('grandTotal').textContent = '---';
   document.getElementById('lastUpdated').textContent = '';
 
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
+
   try {
-    // ── 1. جلب صف المجاميع (الصف 17): B17:J17 ──────────────────────────
-    const totalsData = await fetchRange('B17:J17');
-    const totalsRow = totalsData.table.rows[0];
+    const res  = await fetch(url);
+    const text = await res.text();
+    const json = JSON.parse(
+      text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/)[1]
+    );
+    const rows     = json.table.rows;
+    const numCols  = json.table.cols.length;
 
-    // مجاميع الشهور: B17=col0 .. I17=col7
-    const monthTotals = [];
-    for (let m = 0; m < 8; m++) {
-      const cell = totalsRow && totalsRow.c ? totalsRow.c[m] : null;
-      monthTotals.push(Number(cell?.v) || 0);
+    /* ── آخر صف = صف المجاميع ── */
+    const totalRowIdx = rows.length - 1;
+    const totalRow    = rows[totalRowIdx];
+
+    /* Grand Total (عمود J = index 9) */
+    const grandTotal = Number(totalRow?.c?.[9]?.v) || 0;
+
+    /* Monthly totals (أعمدة B..I = index 1..8) */
+    const monthTotals = Array.from({length: 8}, (_, m) =>
+      Number(totalRow?.c?.[m + 1]?.v) || 0
+    );
+
+    /* ── Sub-cards من العمود K (index 10) فصاعدًا ──
+       الصف index 1 = الصف الثاني في الشيت  → اسم الكارت
+       الصف index 2 = الصف الثالث في الشيت  → قيمة المبلغ   */
+    const subCards = [];
+    for (let c = 10; c < numCols; c++) {
+      const name  = rows[1]?.c?.[c]?.v?.toString().trim() ?? '';
+      const value = rows[2]?.c?.[c]?.v ?? null;
+      if (name) subCards.push({ name, value });
     }
 
-    // الإجمالي الكلي: J17 = col8
-    const grandTotalCell = totalsRow && totalsRow.c ? totalsRow.c[8] : null;
-    const grandTotal = Number(grandTotalCell?.v) || 0;
-
-    // ── 2. جلب بيانات الأعضاء: A3:J16 (الصفوف 3 إلى 16) ────────────────
-    const membersData = await fetchRange('A3:J16');
-    const memberRows = membersData.table.rows;
-
+    /* ── صفوف الأعضاء: من index 0 لحد قبل صف المجاميع ── */
     const members = [];
-    for (let i = 0; i < memberRows.length; i++) {
-      const row = memberRows[i];
-      if (!row || !row.c) continue;
-      const nameCell = row.c[0];
-      if (!nameCell || !nameCell.v) continue;
+    for (let i = 0; i < totalRowIdx; i++) {
+      const row      = rows[i];
+      const nameVal  = row?.c?.[0]?.v?.toString().trim();
+      if (!nameVal) continue;
 
-      const name = nameCell.v.toString().trim();
-      const monthlyPayments = [];
-
-      for (let m = 0; m < 8; m++) {
-        const cell = row.c[m + 1];
-        monthlyPayments.push(cell ? (Number(cell.v) || 0) : 0);
-      }
-
-      const totalCell = row.c[9];
-      const total = totalCell ? (Number(totalCell.v) || 0) : 0;
-
-      members.push({ name, monthlyPayments, total });
+      const monthlyPayments = Array.from({length: 8}, (_, m) =>
+        Number(row.c?.[m + 1]?.v) || 0
+      );
+      const total = Number(row.c?.[9]?.v) || 0;
+      members.push({ name: nameVal, monthlyPayments, total });
     }
 
-    // ── 3. تحديث الواجهة ────────────────────────────────────────────────
-
-    // الإجمالي الكلي
+    /* ── تحديث Grand Total ── */
     document.getElementById('grandTotal').textContent = formatNumber(grandTotal);
 
-    // ملخص الشهور
-    const monthlyHtml = MONTHS.map((m, i) => `
+    /* ── رسم شجرة الكروت المتصلة ── */
+    const treeSection   = document.getElementById('treeSection');
+    const treeBranchRow = document.getElementById('treeBranchRow');
+
+    if (subCards.length > 0) {
+      /* امسح الكروت القديمة (لكن احتفظ بـ line div) */
+      const oldNodes = treeBranchRow.querySelectorAll('.tree-node');
+      oldNodes.forEach(n => n.remove());
+
+      subCards.forEach(card => {
+        const node = document.createElement('div');
+        node.className = 'tree-node';
+        node.innerHTML = `
+          <div class="tree-node-stem"></div>
+          <div class="sub-card">
+            <div class="sc-title">${card.name}</div>
+            <div class="sc-amount">${formatNumber(card.value)}</div>
+            <div class="sc-currency">جنيه مصري</div>
+            <div class="sc-dot"></div>
+          </div>`;
+        treeBranchRow.appendChild(node);
+      });
+
+      treeSection.style.display = 'block';
+      /* ارسم الخط الأفقي بعد ما الـ DOM يتحدث */
+      requestAnimationFrame(() => requestAnimationFrame(drawBranchLine));
+    } else {
+      treeSection.style.display = 'none';
+    }
+
+    /* ── Monthly Summary ── */
+    document.getElementById('monthlySummary').innerHTML = MONTHS.map((m, i) => `
       <div class="month-card">
         <div class="month-name">${m}</div>
         <div class="month-amount">${formatNumber(monthTotals[i])}</div>
-      </div>
-    `).join('');
-    document.getElementById('monthlySummary').innerHTML = monthlyHtml;
+      </div>`).join('');
 
-    // الإحصائيات
+    /* ── Stats ── */
     const paidCount = members.filter(m => m.total > 0).length;
-    document.getElementById('paidCount').textContent = paidCount;
-    document.getElementById('unpaidCount').textContent = members.length - paidCount;
+    document.getElementById('paidCount').textContent    = paidCount;
+    document.getElementById('unpaidCount').textContent  = members.length - paidCount;
     document.getElementById('totalMembers').textContent = members.length;
-    document.getElementById('statsBar').style.display = 'flex';
+    document.getElementById('statsBar').style.display   = 'flex';
 
-    // كروت الأعضاء
-    const cardsHtml = members.map((m, idx) => {
-      const isPaid = m.total > 0;
-      const pillsHtml = MONTHS.map((month, mi) => {
-        const paid = m.monthlyPayments[mi] > 0;
-        return `<span class="month-pill ${paid ? 'paid-month' : ''}">${month}</span>`;
-      }).join('');
+    /* ── Member Cards (بدون عرض المبلغ) ── */
+    document.getElementById('mainContent').innerHTML = `
+      <div class="members-grid">
+        ${members.map((m, idx) => {
+          const isPaid   = m.total > 0;
+          const pillsHtml = MONTHS.map((month, mi) =>
+            `<span class="month-pill ${m.monthlyPayments[mi] > 0 ? 'paid-month' : ''}">${month}</span>`
+          ).join('');
+          return `
+            <div class="member-card ${isPaid ? 'paid' : ''}">
+              <div class="rank-badge">${idx + 1}</div>
+              <div class="status-dot"></div>
+              <div class="member-avatar">${getInitials(m.name)}</div>
+              <div class="member-name">${m.name}</div>
+              <div class="months-pills">${pillsHtml}</div>
+              <div class="status-tag">${isPaid ? '✅ تم الدفع' : '⏳ لم يتم الدفع بعد'}</div>
+            </div>`;
+        }).join('')}
+      </div>`;
 
-      return `
-        <div class="member-card ${isPaid ? 'paid' : ''}">
-          <div class="rank-badge">${idx + 1}</div>
-          <div class="status-dot"></div>
-          <div class="member-avatar">${getInitials(m.name)}</div>
-          <div class="member-name">${m.name}</div>
-          <div class="member-amount">
-            <div class="amount-val">${formatNumber(m.total)}</div>
-            <div class="amount-label">جنيه مصري</div>
-          </div>
-          <div class="months-pills">${pillsHtml}</div>
-          <div class="status-tag">${isPaid ? '✅ تم الدفع' : '⏳ لم يتم الدفع بعد'}</div>
-        </div>
-      `;
-    }).join('');
-
-    document.getElementById('mainContent').innerHTML = `<div class="members-grid">${cardsHtml}</div>`;
-
-    const now = new Date();
-    document.getElementById('lastUpdated').textContent = `آخر تحديث: ${now.toLocaleTimeString('ar-EG')}`;
+    document.getElementById('lastUpdated').textContent =
+      `آخر تحديث: ${new Date().toLocaleTimeString('ar-EG')}`;
 
   } catch (err) {
     console.error(err);
@@ -741,6 +671,9 @@ async function loadData() {
 
 loadData();
 setInterval(loadData, 120000);
+
+/* إعادة رسم الخط لو غيّر المستخدم حجم الشاشة */
+window.addEventListener('resize', drawBranchLine);
 </script>
 
 </body>
